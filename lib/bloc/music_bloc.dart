@@ -8,11 +8,13 @@ import 'package:music_track/repository/music_repository.dart';
 class MusicBloc extends Bloc<MusicEvent, MusicState> {
   MusicRepository musicRepository;
 
-  MusicBloc({@required this.musicRepository}) : super(InitialMusicState());
+  MusicBloc({@required this.musicRepository}) : super(ErrorMusicState(message: "No Internet Connection"));
 
   @override
   Stream<MusicState> mapEventToState(MusicEvent event) async* {
-    if (event is FetchTrackListMusicEvent) {
+    if (event is InternetConnectionLostMusicEvent) {
+      yield ErrorMusicState(message: "No Internet Connection");
+    } else if (event is FetchTrackListMusicEvent) {
       yield LoadingMusicState();
       try {
         List<TrackList> trackList = await musicRepository.getTrackList();

@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:connectivity/connectivity.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -21,17 +24,25 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   MusicBloc musicBloc;
+  StreamSubscription<ConnectivityResult> connectivitySubscription;
 
   @override
   void initState() {
     super.initState();
     musicBloc = BlocProvider.of<MusicBloc>(context);
-    musicBloc.add(FetchTrackListMusicEvent());
+    connectivitySubscription = Connectivity().onConnectivityChanged.listen((ConnectivityResult result) {
+      if (result == ConnectivityResult.mobile || result == ConnectivityResult.wifi) {
+        musicBloc.add(FetchTrackListMusicEvent());
+      } else {
+        musicBloc.add(InternetConnectionLostMusicEvent());
+      }
+    });
   }
 
   @override
   void dispose() {
     super.dispose();
+    connectivitySubscription.cancel();
   }
 
   @override

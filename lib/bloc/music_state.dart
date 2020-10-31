@@ -20,7 +20,7 @@ class LoadedTrackListMusicState extends MusicState {
   LoadedTrackListMusicState({@required this.trackList});
 
   @override
-  List<Object> get props => throw UnimplementedError();
+  List<Object> get props => [];
 }
 
 class ErrorMusicState extends MusicState {
@@ -29,5 +29,5 @@ class ErrorMusicState extends MusicState {
   ErrorMusicState({@required this.message});
 
   @override
-  List<Object> get props => throw UnimplementedError();
+  List<Object> get props => [];
 }
