@@ -102,7 +102,6 @@ class TrackList {
 class Track {
   int trackId;
   String trackName;
-  List<Null> trackNameTranslationList;
   int trackRating;
   int commontrackId;
   int instrumental;
@@ -124,7 +123,6 @@ class Track {
   Track(
       {this.trackId,
       this.trackName,
-      this.trackNameTranslationList,
       this.trackRating,
       this.commontrackId,
       this.instrumental,
@@ -146,13 +144,6 @@ class Track {
   Track.fromJson(Map<String, dynamic> json) {
     trackId = json['track_id'];
     trackName = json['track_name'];
-    if (json['track_name_translation_list'] != null) {
-      trackNameTranslationList = new List<Null>();
-      json['track_name_translation_list'].forEach((v) {
-        trackNameTranslationList.add(new Null.fromJson(v));
-      });
-    }
-    trackRating = json['track_rating'];
     commontrackId = json['commontrack_id'];
     instrumental = json['instrumental'];
     explicit = json['explicit'];
@@ -175,9 +166,6 @@ class Track {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['track_id'] = this.trackId;
     data['track_name'] = this.trackName;
-    if (this.trackNameTranslationList != null) {
-      data['track_name_translation_list'] = this.trackNameTranslationList.map((v) => v.toJson()).toList();
-    }
     data['track_rating'] = this.trackRating;
     data['commontrack_id'] = this.commontrackId;
     data['instrumental'] = this.instrumental;
