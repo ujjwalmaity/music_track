@@ -8,6 +8,7 @@ import 'package:music_track/bloc/music_bloc.dart';
 import 'package:music_track/bloc/music_event.dart';
 import 'package:music_track/bloc/music_state.dart';
 import 'package:music_track/model/trending_music.dart';
+import 'package:music_track/util/constants.dart';
 import 'package:music_track/view/components/widget_error.dart';
 import 'package:music_track/view/components/widget_loading.dart';
 import 'package:music_track/view/components/widget_track.dart';
@@ -37,6 +38,7 @@ class _HomeScreenState extends State<HomeScreen> {
         musicBloc.add(InternetConnectionLostMusicEvent());
       }
     });
+    musicBloc.add(FetchTrackListMusicEvent());
   }
 
   @override
@@ -85,6 +87,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   itemBuilder: (ctx, pos) {
                     return GestureDetector(
                       onTap: () {
+                        Constants.trackId = trackList[pos].track.trackId;
                         Navigator.pushNamed(context, TrackDetailsScreen.id);
                       },
                       child: WidgetTrack(track: trackList[pos].track),
@@ -94,7 +97,7 @@ class _HomeScreenState extends State<HomeScreen> {
               } else if (state is ErrorMusicState) {
                 return WidgetError(message: state.message);
               } else {
-                return Container();
+                return WidgetError(message: "Connection Lost");
               }
             },
           ),
