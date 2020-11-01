@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:music_track/bloc/track_bloc.dart';
+import 'package:music_track/db/database_provider.dart';
+import 'package:music_track/model/music.dart';
+import 'package:music_track/util/constants.dart';
 import 'package:music_track/model/trending_music.dart';
 import 'package:music_track/repository/music_repository.dart';
 import 'package:music_track/view/components/widget_error.dart';
@@ -33,7 +36,13 @@ class _TrackDetailsScreenState extends State<TrackDetailsScreen> {
               return IconButton(
                 icon: const Icon(Icons.bookmark_border),
                 onPressed: () {
-                  Scaffold.of(context).showSnackBar(SnackBar(content: Text("Bookmark saved")));
+                  Music music = Music(trackId: Constants.trackId, trackName: Constants.trackName);
+                  DatabaseProvider.db.insertMusic(music).then((isInserted) {
+                    if (isInserted)
+                      Scaffold.of(context).showSnackBar(SnackBar(content: Text("Bookmark saved")));
+                    else
+                      Scaffold.of(context).showSnackBar(SnackBar(content: Text("Already saved", style: TextStyle(color: Colors.red))));
+                  });
                 },
               );
             },

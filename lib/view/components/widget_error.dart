@@ -9,9 +9,10 @@ class WidgetError extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(16.0),
         child: Text(
           message,
+          textAlign: TextAlign.center,
           style: TextStyle(color: Colors.black),
         ),
       ),

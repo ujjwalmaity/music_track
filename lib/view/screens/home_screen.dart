@@ -88,6 +88,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     return GestureDetector(
                       onTap: () {
                         Constants.trackId = trackList[pos].track.trackId;
+                        Constants.trackName = trackList[pos].track.trackName;
                         Navigator.pushNamed(context, TrackDetailsScreen.id);
                       },
                       child: WidgetTrack(track: trackList[pos].track),
